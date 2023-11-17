@@ -1,0 +1,79 @@
+#include <iostream>
+#include <math.h>
+using namespace std;
+
+void checkValidInput() {
+    if (cin.fail()) {
+        throw "Incorrect input";
+    }
+}
+
+void checkValidParams(int n) {
+    if (n < 4) {
+        throw "Input correct data";
+    }
+}
+
+double calculate(double x, double b, double h, int n) {
+    double y = 1; 
+
+    for (x; x <= b; x += h) {
+        if (x <= 0) {
+            for (int i = 0; i <= n - 1; i++) {
+                y *= i + i;
+            }
+        }
+        else {
+            if (x > 0) {
+                y = 0;
+                for (int i = 0; i <= n - 1; i++) {
+                    for (int j = 0; j <= n - 1; j++) {
+                    y += static_cast<int>((x + i) / (i + j + 1));                   
+                    }
+                }
+                cout << "x= " << x << "; " << "y= " << y << endl;
+            }
+        }
+    }
+    return y;
+}
+int main() {
+    double x;
+    double b;
+    double h;
+    int n;
+
+    try {
+        cout << "Input n>=4, n= " << endl;
+        cin >> n;
+        checkValidInput();
+        checkValidParams(n);
+
+        cout << "Input x= " << endl;
+        cin >> x;
+        checkValidInput();
+
+        cout << "Input b= " << endl;
+        cin >> b;
+        checkValidInput();
+
+        cout << "Input h= " << endl;
+        cin >> h;
+        checkValidInput();
+
+        cout << "x\tcalculate" << endl;
+        for (x; x <= b; x += h) {
+            cout << x << "\t" << calculate(x, b, h, n) << endl;
+        }
+    }
+    catch (const char* ex) {
+        cout << ex << endl;
+        return -1;
+    }
+    catch (...) {
+        cout << "Unknown error" << endl;
+        return -2;
+    }
+
+    return 0;
+}
